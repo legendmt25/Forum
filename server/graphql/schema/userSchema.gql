@@ -1,0 +1,21 @@
+type UserModelQL {
+    id: ID!
+    name: String!
+    email: String!
+    createdAt: String!
+}
+
+input UserInputQL {
+    name: String!
+    email: String!
+    password: String!
+}
+
+type Query {
+    users: [UserModelQL]!
+    user: UserModelQL!
+}
+
+type Mutation {
+    addUser(data: UserInputQL!): UserModelQL!
+}
