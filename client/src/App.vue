@@ -1,31 +1,43 @@
 <template>
-  <nav id="nav">
-    <router-link to="/">Home</router-link>
-    <router-link to="/about">About</router-link>
-    <router-link to="/">Community</router-link>
+  <nav class="flex bg-gray-200 dark:bg-gray-700 rounded-b">
+    <div class="flex container justify-center gap-5 py-1 font-light">
+      <router-link :active-class="activeLinkClasses" class="hover:text-blue-500 dark:hover:text-white py-2 px-1" to="/">Home</router-link>
+      <router-link :active-class="activeLinkClasses" class="hover:text-blue-500 dark:hover:text-white py-2 px-1" to="/communities">Communities</router-link>
+    </div>
+    <div class="py-1 ml-auto pr-2 flex gap-2">
+      <div class="h-10">
+        <img class="rounded-full h-full w-full object-contain" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="User">
+      </div>
+      <button type="button" @click.prevent="themeToggle()" class="bg-black shadow-2xl shadow-black py-2 px-3 dark:bg-white rounded"></button>
+    </div>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<script>
+export default {
+  data() {
+    return {
+      activeLinkClasses:
+        'text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 dark:text-white dark:text-blue-700',
+    };
+  },
+  methods: {
+    themeToggle() {
+      if(localStorage.theme === 'light') {
+        localStorage.theme = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      }
+    },
+  },
+  created() {
+    if(localStorage.theme === undefined) {
+      localStorage.theme = 'light';
+      document.documentElement.classList.remove('dark');
+    }
+  }
+};
+</script>
