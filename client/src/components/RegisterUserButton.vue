@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     async registerUser() {
-      const user = await fetch('http://localhost:3000/graphql', {
+      await fetch('http://localhost:3000/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => res.data.register);
-      console.log(user);
+      this.$router.push('/');
     },
   },
 };

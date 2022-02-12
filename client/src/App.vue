@@ -1,6 +1,6 @@
 <template>
   <navbar-component></navbar-component>
-  <div class="bg-slate-400 dark:bg-slate-500 py-2 flex justify-center h-screen">
+  <div class="bg-gray-100 dark:bg-neutral-800 py-2 flex justify-center h-screen">
     <div class="container">
       <router-view />
     </div>

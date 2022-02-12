@@ -1,7 +1,15 @@
 <template>
   <div class="relative">
     <button
-      class="flex items-center gap-3 select-none text-sm font-light hover:text-slate-500"
+      class="
+        flex
+        items-center
+        gap-3
+        select-none
+        text-sm
+        font-bold
+        hover:text-slate-500
+      "
       @click="toggle($event)"
     >
       <slot name="button"></slot>
@@ -15,6 +23,7 @@
       leave-to-class="opacity-0 scale-75"
     >
       <ul
+        @click="toggle"
         class="absolute bg-white rounded shadow-lg text-sm text-left w-32"
         v-if="open"
         :class="placement == 'left' ? 'right-0' : 'left-0'"
@@ -38,10 +47,14 @@ export default {
   methods: {
     toggle(event) {
       this.open = !this.open;
-      if(this.open) {
-        event.target.parentNode.querySelector('svg').classList.add('rotate-180')
+      if (this.open) {
+        event.target.parentNode
+          .querySelector("svg")
+          .classList.add("rotate-180");
       } else {
-        event.target.parentNode.querySelector('svg').classList.remove('rotate-180')
+        event.target.parentNode
+          .querySelector("svg")
+          .classList.remove("rotate-180");
       }
     },
   },

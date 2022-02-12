@@ -1,5 +1,5 @@
 <template>
-  <ol class="bg-slate-200 list-inside rounded shadow-lg">
+  <ol class="bg-neutral-50 dark:bg-neutral-600 list-inside rounded shadow-lg">
     <community-single-item
       v-for="community in communities"
       :key="community.id"
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import CommunitySingleItem from './CommunitySingleItem.vue';
+import CommunitySingleItem from "./CommunitySingleItem.vue";
 export default {
   components: { CommunitySingleItem },
   props: {
@@ -21,11 +21,11 @@ export default {
     };
   },
   async created() {
-    this.communities = await fetch('http://localhost:3000/graphql', {
-      method: 'POST',
+    this.communities = await fetch("http://localhost:3000/graphql", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         query: `

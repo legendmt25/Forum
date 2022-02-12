@@ -1,9 +1,9 @@
 <template>
-  <label class="block">
-    <span class="text-gray-700">{{ label }}</span>
+  <label class="flex flex-col gap-2">
+    <span class="font-bold">{{ label }}</span>
     <input
       :type="type"
-      class="shadow-md form-input mt-1 block w-full rounded border"
+      class="shadow-md dark:bg-neutral-600 dark:text-white form-input mt-1 block w-full rounded border"
       :name="obj[property]"
       v-model="obj[property]"
     />

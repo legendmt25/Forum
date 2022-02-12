@@ -4,18 +4,22 @@ import { IUser } from './UserModel';
 
 export interface IPost {
   title: string;
-  image: string;
+  str: string;
   user: IUser;
   comments: IComment[];
+  createdAt: Date;
 }
 
-export const PostSchema: Mongoose.Schema = new Mongoose.Schema({
-  title: { type: String, required: true },
-  image: { type: String, required: false },
-  user: { type: Mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-  comments: [
-    { type: Mongoose.Schema.Types.ObjectId, required: false, ref: 'Comment' },
-  ],
-});
+export const PostSchema: Mongoose.Schema = new Mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    str: { type: String, required: false },
+    user: { type: Mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    comments: [
+      { type: Mongoose.Schema.Types.ObjectId, required: false, ref: 'Comment' },
+    ],
+  },
+  { timestamps: true }
+);
 
 export default Mongoose.model<IPost & Mongoose.Document>('Post', PostSchema);

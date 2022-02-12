@@ -4,16 +4,12 @@ import router from './router';
 import './assets/tailwind.css';
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((route) => route.name == 'loginView')) {
-    try {
+  if (to.matched.some((route) => route.name == 'loginView' || route.name == 'registerView')) {
       const user = JSON.parse(sessionStorage.getItem('user'));
-      if (typeof user.id == 'undefined') {
-        return next('/');
+      if(user == null) {
+        return next();
       }
-      return next();
-    } catch (err) {
-      err;
-    }
+      return next('/');
   }
   return next();
 });

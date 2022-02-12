@@ -21,6 +21,7 @@ export interface IUser {
   communities: ICommunity[];
   posts: IPost[];
   comments: IComment[];
+  createdAt: Date;
 }
 
 export const UserSchema: Mongoose.Schema = new Mongoose.Schema(

@@ -29,7 +29,7 @@ export default class UserService {
   }
 
   async findById(id: string) {
-    return this.userModel.findById(id);
+    return this.userModel.findById(id).populate('communities').populate('posts').populate('comments');
   }
 
   async create(userInput: UserInput) {

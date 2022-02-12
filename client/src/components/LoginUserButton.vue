@@ -48,6 +48,7 @@ export default {
           });
         this.isAuthenticated = true;
         sessionStorage.setItem('user', JSON.stringify(user));
+        this.$router.push('/');
       } catch (err) {
         alert('Invalid username or password');  
         console.log(err);

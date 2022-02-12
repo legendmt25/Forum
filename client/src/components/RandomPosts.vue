@@ -27,6 +27,8 @@ export default {
                     posts {
                         id
                         title
+                        str
+                        createdAt
                         user {
                             id
                             username
@@ -34,6 +36,7 @@ export default {
                         comments {
                             id
                             text
+                            createdAt
                             user {
                                 id
                                 username

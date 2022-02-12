@@ -24,10 +24,11 @@ export class CommunityResolver {
 
   @Mutation((returns) => Community)
   async createCommunity(
+    @Arg('categoryName') categoryName: string,
     @Arg('adminId') adminId: string,
     @Arg('communityInput') communityInput: CommunityInput
   ) {
-    return this.communityService.create(adminId, communityInput);
+    return this.communityService.create(categoryName, adminId, communityInput);
   }
 
   @Mutation((returns) => Community)

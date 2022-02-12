@@ -3,7 +3,18 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Category {
+  communities: [Community!]!
+  id: ID!
+  name: String!
+}
+
+input CategoryInput {
+  name: String!
+}
+
 type Comment {
+  createdAt: DateTime!
   id: ID!
   replies: [Comment!]!
   text: String!
@@ -41,8 +52,9 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Mutation {
+  createCategory(categoryInput: CategoryInput!): Category!
   createComment(commentInput: CommentInput!, postId: String!, userId: String!): Comment!
-  createCommunity(adminId: String!, communityInput: CommunityInput!): Community!
+  createCommunity(adminId: String!, categoryName: String!, communityInput: CommunityInput!): Community!
   createPost(communityId: String!, postInput: PostInput!, userId: String!): Post!
   deleteById(communityId: String!): Community!
   deleteUser(userId: String!): User!
@@ -53,17 +65,22 @@ type Mutation {
 
 type Post {
   comments: [Comment!]!
+  createdAt: DateTime!
   id: ID!
+  str: String
   title: String!
   user: User!
 }
 
 input PostInput {
-  image: String!
+  str: String!
   title: String!
 }
 
 type Query {
+  categories: [Category!]!
+  categoryById(categoryId: String!): Category!
+  categoryByName(categoryName: String!): Category!
   comments: [Comment!]!
   communities: [Community!]!
   community(communityId: String!): Community!
@@ -78,6 +95,7 @@ type User {
   birthDate: DateTime
   comments: [Comment!]!
   communities: [Community!]!
+  createdAt: DateTime!
   email: String!
   firstName: String
   gender: String

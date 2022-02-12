@@ -29,6 +29,10 @@ export class User {
   @Length(1, 100)
   email!: String;
 
+  @Field()
+  @IsDate()
+  createdAt!: Date
+
   @Field({ nullable: true })
   @IsDate()
   birthDate!: Date;

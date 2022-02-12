@@ -1,3 +1,4 @@
+import { IsDate } from 'class-validator';
 import { Field, ID, InputType, ObjectType } from 'type-graphql';
 import { User } from './UserSchema';
 
@@ -15,7 +16,11 @@ export class Comment {
   @Field((is) => [Comment])
   replies!: Comment[];
 
-  type!: String;
+  //type!: String;
+
+  @Field()
+  @IsDate()
+  createdAt!: Date;
 }
 
 @InputType()

@@ -5,17 +5,21 @@ export interface IComment {
   text: string;
   user: IUser;
   replies: IComment[];
-  type: string
+  type: string;
+  createdAt: Date;
 }
 
-export const CommentSchema: Mongoose.Schema = new Mongoose.Schema({
-  text: { type: String, required: true },
-  user: { type: Mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-  replies: [{ type: [Mongoose.Schema.Types.ObjectId], ref: 'Comment'}],
-  type: { type: String, default: 'comment' ,required: true }
-});
+export const CommentSchema: Mongoose.Schema = new Mongoose.Schema(
+  {
+    text: { type: String, required: true },
+    user: { type: Mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    replies: [{ type: [Mongoose.Schema.Types.ObjectId], ref: 'Comment' }],
+    type: { type: String, default: 'comment', required: true },
+  },
+  { timestamps: true }
+);
 
-CommentSchema.pre('find', function(next) {
+CommentSchema.pre('find', function (next) {
   this.populate('replies').populate('user');
   next();
 });

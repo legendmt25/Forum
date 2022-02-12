@@ -1,24 +1,52 @@
 <template>
-  <div class="p-2 flex flex-col justify-end">
-    <form @submit.prevent="comment()">
+  <div class="p-2 flex flex-col justify-center">
+    <form class="flex flex-col gap-5" @submit.prevent="comment()">
+      <div class="w-100 flex justify-center">
+        <button
+          @keyup.enter="submit"
+          class="
+            text-md
+            rounded-full
+            border
+            shadow-md
+            border-blue-400
+            bg-white
+            px-5
+            py-1
+            transition-all
+            hover:bg-blue-400 hover:text-white hover:dark:text-white
+            dark:bg-sky-800 dark:border-0
+            hover:dark:bg-sky-700
+          "
+        >
+          Comment
+        </button>
+      </div>
       <textarea
         v-model="commentText"
-        class="form-textarea rounded border w-full h-12 max-h-24 mb-0.5 shadow-lg transition-all resize-none hover:h-24 focus:h-24"
+        class="
+          form-textarea
+          rounded
+          border
+          w-full
+          h-12
+          max-h-24
+          mb-0.5
+          shadow-lg
+          transition-all
+          resize-none
+          hover:h-24
+          focus:h-24
+          dark:bg-neutral-700
+        "
         placeholder="Insert comment here"
       ></textarea>
-      <hr />
-      <button
-        @keyup.enter="submit"
-        class="text-xs rounded-full border shadow-xl ml-auto border-blue-400 px-2 py-1 mt-0.5 transition-all hover:bg-blue-400 hover:text-white"
-      >
-        Comment
-      </button>
     </form>
   </div>
 </template>
 
 <script>
-import { inject, toRef } from 'vue';
+import { inject, toRef } from "vue";
 
 export default {
   props: {
@@ -26,8 +54,8 @@ export default {
     postComments: Array,
   },
   setup(props) {
-    const isAuthenticated = inject('authenticated');
-    const comments = toRef(props, 'postComments');
+    const isAuthenticated = inject("authenticated");
+    const comments = toRef(props, "postComments");
     return {
       comments,
       isAuthenticated,
@@ -35,20 +63,20 @@ export default {
   },
   data() {
     return {
-      commentText: '',
+      commentText: "",
     };
   },
   methods: {
     async comment() {
-      if (this.commentText == '') {
+      if (this.commentText == "") {
         return;
       }
       //TODO: Post Comment fetch()
-      const comment = await fetch('http://localhost:3000/graphql', {
-        method: 'POST',
+      const comment = await fetch("http://localhost:3000/graphql", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify({
           query: `
@@ -68,7 +96,7 @@ export default {
           }
           `,
           variables: {
-            userId: JSON.parse(sessionStorage.getItem('user')).id,
+            userId: JSON.parse(sessionStorage.getItem("user")).id,
             postId: this.postId,
             commentInput: {
               text: this.commentText,
@@ -78,9 +106,9 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => res.data.createComment);
-        console.log(this.comments);
+      console.log(this.comments);
       this.comments.push(comment);
-      this.commentText = '';
+      this.commentText = "";
     },
   },
 };

@@ -15,18 +15,28 @@ import CommentModel from './models/CommentModel';
 import { CommentResolver } from './graphql/resolvers/CommentResolver';
 import CountryModel from './models/CountryModel';
 import { CountryResolver } from './graphql/resolvers/CountryResolver';
+import CategoryModel from './models/CategoryModel';
+import { CategoryResolver } from './graphql/resolvers/CategoryResolver';
 
 Container.set({ id: 'USER', factory: () => UserModel });
 Container.set({ id: 'COMMUNITY', factory: () => CommunityModel });
 Container.set({ id: 'POST', factory: () => PostModel });
 Container.set({ id: 'COMMENT', factory: () => CommentModel });
 Container.set({ id: 'COUNTRY', factory: () => CountryModel });
+Container.set({ id: 'CATEGORY', factory: () => CategoryModel });
 
 async function startServer() {
   const PORT = process.env.PORT || 3000;
   const app = express();
   const schema = await buildSchema({
-    resolvers: [UserResolver, CommunityResolver, PostResolver, CommentResolver, CountryResolver],
+    resolvers: [
+      UserResolver,
+      CommunityResolver,
+      PostResolver,
+      CommentResolver,
+      CountryResolver,
+      CategoryResolver,
+    ],
     emitSchemaFile: true,
     container: Container,
   });

@@ -1,3 +1,4 @@
+import { IsDate } from 'class-validator';
 import { Field, ID, InputType, ObjectType } from 'type-graphql';
 import { Comment } from './CommentSchema';
 import { User } from './UserSchema';
@@ -10,13 +11,18 @@ export class Post {
   @Field()
   title!: String;
 
-  image!: String;
+  @Field({ nullable: true })
+  str!: String;
 
   @Field((is) => User)
   user!: User;
 
   @Field((is) => [Comment])
   comments!: Comment[];
+
+  @Field()
+  @IsDate()
+  createdAt!: Date;
 }
 
 @InputType()
@@ -25,5 +31,5 @@ export class PostInput {
   title!: String;
 
   @Field()
-  image!: String;
+  str?: String;
 }
