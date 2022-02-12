@@ -1,11 +1,19 @@
 import { Inject, Service } from 'typedi';
 import { IUser } from '../models/UserModel';
-import { UserInput } from '../graphql/schema/UserSchema';
+import { UserCredentialsInput, UserInput } from '../graphql/schema/UserSchema';
 import { Model } from 'mongoose';
 
 @Service()
 export default class UserService {
   constructor(@Inject('USER') private readonly userModel: Model<IUser>) {}
+  
+  async loginUser(userCredentials: UserCredentialsInput) {
+    const user = await this.userModel.findOne(userCredentials);
+    if(user == null) {
+      throw new Error("Invalid username or password");
+    }
+    return user;
+  }
 
   async findAll() {
     return this.userModel

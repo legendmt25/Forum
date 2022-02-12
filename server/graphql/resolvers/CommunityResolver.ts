@@ -27,11 +27,19 @@ export class CommunityResolver {
     @Arg('adminId') adminId: string,
     @Arg('communityInput') communityInput: CommunityInput
   ) {
-      return this.communityService.create(adminId, communityInput);
+    return this.communityService.create(adminId, communityInput);
   }
 
   @Mutation((returns) => Community)
   async deleteById(@Arg('communityId') communityId: string) {
     return await this.communityService.deleteById(communityId);
+  }
+
+  @Mutation((returns) => Community)
+  async joinCommunity(
+    @Arg('communityId') communityId: string,
+    @Arg('userId') userId: string
+  ) {
+    return this.communityService.joinCommunity(communityId, userId);
   }
 }

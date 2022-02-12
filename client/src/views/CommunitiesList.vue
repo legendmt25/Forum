@@ -1,6 +1,15 @@
 <template>
-  <div class="container">
-    <communities-list></communities-list>
+  <div class="flex justify-center gap-2">
+    <div>
+      <communities-list class="mb-2" category="all"></communities-list>
+    </div>
+    <div class="w-1/3">
+      <communities-list category="all"></communities-list>
+    </div>
+    <div>
+    <communities-list class="mb-2" category="all"></communities-list>
+    <communities-list category="all"></communities-list>
+    </div>
   </div>
 </template>
 

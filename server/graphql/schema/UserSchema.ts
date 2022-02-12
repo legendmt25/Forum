@@ -1,5 +1,6 @@
 import { IsDate, IsEmail, Length } from 'class-validator';
 import { Field, ObjectType, ID, InputType } from 'type-graphql';
+import { Gender } from '../../models/UserModel';
 import { Comment } from './CommentSchema';
 import { Community } from './CommunitySchema';
 import { Post } from './PostSchema';
@@ -15,27 +16,27 @@ export class User {
 
   password!: String;
 
-  @Field({nullable: true})
-  @Length(1, 15)
+  @Field({ nullable: true })
+  @Length(1, 30)
   firstName!: String;
 
-  @Field({nullable: true})
-  @Length(1, 15)
+  @Field({ nullable: true })
+  @Length(1, 30)
   lastName!: String;
 
   @Field()
   @IsEmail()
-  @Length(1, 30)
+  @Length(1, 100)
   email!: String;
 
-  @Field()
+  @Field({ nullable: true })
   @IsDate()
   birthDate!: Date;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   gender!: String;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   location!: String;
 
   @Field((is) => [Community])
@@ -50,22 +51,37 @@ export class User {
 
 @InputType()
 export class UserInput implements Partial<User> {
-  @Field({nullable: true})
+  @Field({ nullable: true })
   @Length(1, 30)
   firstName?: String;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   @Length(1, 30)
   lastName?: String;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   location?: String;
 
   @Field()
-  @Length(1, 30)
+  @Length(1, 100)
   @IsEmail()
   email!: String;
 
+  @Field({ nullable: true })
+  birthDate!: Date;
+
+  @Field((is) => String, { nullable: true })
+  gender!: Gender;
+
+  @Field()
+  username!: String;
+
+  @Field()
+  password!: String;
+}
+
+@InputType()
+export class UserCredentialsInput implements Partial<User> {
   @Field()
   username!: String;
 

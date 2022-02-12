@@ -1,5 +1,5 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { UserInput, User } from '../schema/UserSchema';
+import { UserInput, User, UserCredentialsInput } from '../schema/UserSchema';
 import UserService from '../../services/UserService';
 import { Service } from 'typedi';
 
@@ -13,13 +13,18 @@ export class UserResolver {
     return this.userService.findAll();
   }
 
+  @Query(returns => User!)
+  async loginUser(@Arg('userCredentialsInput') userCredentials: UserCredentialsInput) {
+    return await this.userService.loginUser(userCredentials);
+  }
+
   @Query((returns) => User, { nullable: true })
   async user(@Arg('userId') userId: string) {
     return this.userService.findById(userId);
   }
 
   @Mutation((returns) => User)
-  async addUser(@Arg('userData') userData: UserInput) {
+  async register(@Arg('userData') userData: UserInput) {
     return this.userService.create(userData);
   }
 

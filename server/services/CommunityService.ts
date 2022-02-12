@@ -52,4 +52,14 @@ export class CommunityService {
   async deleteById(CommunityId: string) {
     return this.communityModel.findByIdAndDelete(CommunityId);
   }
+
+  async joinCommunity(communityId: string, userId: string) {
+    const user = await this.userService.findById(userId);
+    const community = await this.findById(communityId);
+    if (!user!.communities.includes(community!.id)) {
+      user!.communities.push(community!);
+      user!.save();
+    }
+    return community;
+  }
 }

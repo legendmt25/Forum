@@ -7,44 +7,46 @@
 </template>
 
 <script>
+import PostSingle from "./PostSingle.vue";
 export default {
-  data() {
-    return {
-      posts: [],
-    };
-  },
-  async created() {
-    this.posts = await fetch('http://localhost:3000/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: {
-        query: `
-            query LIST_POSTS {
-                posts {
-                    id
-                    title
-                    user {
+    data() {
+        return {
+            posts: [],
+        };
+    },
+    async created() {
+        this.posts = await fetch("http://localhost:3000/graphql", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({
+                query: `
+                query LIST_POSTS {
+                    posts {
                         id
-                        username
-                    }
-                    comments {
-                        id
-                        text
+                        title
                         user {
                             id
                             username
                         }
+                        comments {
+                            id
+                            text
+                            user {
+                                id
+                                username
+                            }
+                        }
                     }
                 }
-            }
-          `,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => res.data.posts);
-  },
+            `,
+            }),
+        })
+            .then((res) => res.json())
+            .then((res) => res.data.posts);
+    },
+    components: { PostSingle }
 };
 </script>

@@ -28,18 +28,26 @@ input CommunityInput {
   name: String!
 }
 
+type Country {
+  country: String!
+  id: ID!
+  iso2: String!
+  iso3: String!
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
 
 type Mutation {
-  addUser(userData: UserInput!): User!
   createComment(commentInput: CommentInput!, postId: String!, userId: String!): Comment!
   createCommunity(adminId: String!, communityInput: CommunityInput!): Community!
   createPost(communityId: String!, postInput: PostInput!, userId: String!): Post!
   deleteById(communityId: String!): Community!
   deleteUser(userId: String!): User!
+  joinCommunity(communityId: String!, userId: String!): Community!
+  register(userData: UserInput!): User!
   reply(commentId: String!, replyInput: CommentInput!, userId: String!): Comment!
 }
 
@@ -59,13 +67,15 @@ type Query {
   comments: [Comment!]!
   communities: [Community!]!
   community(communityId: String!): Community!
+  countries: [Country!]!
+  loginUser(userCredentialsInput: UserCredentialsInput!): User!
   posts: [Post!]!
   user(userId: String!): User
   users: [User!]!
 }
 
 type User {
-  birthDate: DateTime!
+  birthDate: DateTime
   comments: [Comment!]!
   communities: [Community!]!
   email: String!
@@ -78,9 +88,16 @@ type User {
   username: String!
 }
 
+input UserCredentialsInput {
+  password: String!
+  username: String!
+}
+
 input UserInput {
+  birthDate: DateTime
   email: String!
   firstName: String
+  gender: String
   lastName: String
   location: String
   password: String!

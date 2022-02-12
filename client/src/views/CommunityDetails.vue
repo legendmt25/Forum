@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div>{{ community.name }}</div>
-    <div>{{ community.description }}</div>
+    <div>
+      <img alt="community image" />
+      <h2 class="font-semibold text-2xl">{{ community.name }}</h2>
+      <div class="text-sm">{{ community.description }}</div>
+    </div>
     <post-single
       v-for="post in community.posts"
       :key="post.id"
@@ -13,6 +16,7 @@
 <script>
 import PostSingle from '../components/PostSingle.vue';
 export default {
+  name: 'communityDetailsView',
   components: { PostSingle },
   data() {
     return {
@@ -43,6 +47,10 @@ export default {
                         comments {
                             id
                             text
+                            user {
+                              id
+                              username
+                            }
                         }
                     }
                 }

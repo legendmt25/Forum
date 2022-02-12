@@ -1,15 +1,20 @@
 <template>
-  <community-single-item
-    v-for="community in communities"
-    :key="community.id"
-    :community="community"
-  ></community-single-item>
+  <ol class="bg-slate-200 list-inside rounded shadow-lg">
+    <community-single-item
+      v-for="community in communities"
+      :key="community.id"
+      :community="community"
+    ></community-single-item>
+  </ol>
 </template>
 
 <script>
 import CommunitySingleItem from './CommunitySingleItem.vue';
 export default {
   components: { CommunitySingleItem },
+  props: {
+    category: String,
+  },
   data() {
     return {
       communities: [],
