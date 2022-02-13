@@ -18,12 +18,19 @@ export class CategoryService {
     return this.categoryModel.findOne({ name }).populate('communities');
   }
 
+  async filter(name: string) {
+    if (name == null) {
+      return this.categoryModel.find().populate('communities');
+    }
+    return this.categoryModel.find({ name }).populate('communities');
+  }
+
   async findById(id: string) {
     return this.categoryModel.findById(id).populate('communities');
   }
 
   async create(categoryInput: CategoryInput) {
-    if (await this.findByName(categoryInput.name.toString()) != null) {
+    if ((await this.findByName(categoryInput.name.toString())) != null) {
       throw new Error(`Category ${categoryInput.name} already exists`);
     }
     const category = new this.categoryModel(categoryInput);

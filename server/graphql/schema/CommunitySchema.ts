@@ -21,8 +21,10 @@ export class Community {
 
   @Field((is) => [User])
   moderators!: User[];
-}
 
+  @Field({ nullable: true })
+  avatarImage!: String;
+}
 
 @InputType()
 export class CommunityInput {

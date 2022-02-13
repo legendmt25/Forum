@@ -27,6 +27,7 @@ input CommentInput {
 
 type Community {
   admin: User!
+  avatarImage: String
   description: String!
   id: ID!
   moderators: [User!]!
@@ -52,6 +53,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Mutation {
+  changeAvatar(communityId: String!, file: Upload!): Community!
   createCategory(categoryInput: CategoryInput!): Category!
   createComment(commentInput: CommentInput!, postId: String!, userId: String!): Comment!
   createCommunity(adminId: String!, categoryName: String!, communityInput: CommunityInput!): Community!
@@ -79,7 +81,7 @@ input PostInput {
 }
 
 type Query {
-  categories: [Category!]!
+  categories(categoryName: String): [Category!]!
   categoryById(categoryId: String!): Category!
   categoryByName(categoryName: String!): Category!
   comments: [Comment!]!
@@ -91,6 +93,9 @@ type Query {
   user(userId: String!): User
   users: [User!]!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   birthDate: DateTime

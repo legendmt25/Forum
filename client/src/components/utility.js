@@ -11,8 +11,9 @@ export const mapToSelectItems = (list, text, value) => {
   }));
 };
 
+
 export const transformDate = (date) => {
-  let time = Math.abs(new Date(date) - new Date()) / 3600;
+  let time = Math.abs(new Date(date) - new Date()) / 1000;
   let what = 'days';
   if (time < 60) {
     what = 'seconds';

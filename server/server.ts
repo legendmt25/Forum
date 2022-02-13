@@ -17,6 +17,7 @@ import CountryModel from './models/CountryModel';
 import { CountryResolver } from './graphql/resolvers/CountryResolver';
 import CategoryModel from './models/CategoryModel';
 import { CategoryResolver } from './graphql/resolvers/CategoryResolver';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 Container.set({ id: 'USER', factory: () => UserModel });
 Container.set({ id: 'COMMUNITY', factory: () => CommunityModel });
@@ -28,6 +29,10 @@ Container.set({ id: 'CATEGORY', factory: () => CategoryModel });
 async function startServer() {
   const PORT = process.env.PORT || 3000;
   const app = express();
+
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+  app.use(express.static('public'));
+
   const schema = await buildSchema({
     resolvers: [
       UserResolver,

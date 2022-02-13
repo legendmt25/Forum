@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(option, key) in user.options" :key="key">
+  <div class="dark:text-white p-2" v-for="(option, key) in user.options" :key="key">
     {{ key }}
     <input
       type="checkbox"

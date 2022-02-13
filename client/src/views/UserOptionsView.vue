@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-3">
+  <div class="flex gap-3 dark:text-white">
     <router-link
       class="border-b p-2"
       :to="{ name: 'account-options', params: {} }"

@@ -1,3 +1,6 @@
+import { createWriteStream } from 'fs';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import path from 'path';
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { Service } from 'typedi';
 import { CommunityService } from '../../services/CommunityService';
@@ -11,6 +14,14 @@ export class CommunityResolver {
     private readonly communityService: CommunityService,
     private readonly userService: UserService
   ) {}
+
+  @Mutation((returns) => Community)
+  async changeAvatar(
+    @Arg('communityId') communityId: string,
+    @Arg('file', () => GraphQLUpload) file: FileUpload
+  ) {
+    return await this.communityService.updateAvatar(communityId, file);
+  }
 
   @Query((returns) => [Community])
   async communities() {

@@ -8,6 +8,7 @@ export interface ICommunity {
   posts: IPost[];
   admin: IUser;
   moderators: IUser[];
+  avatarImage: string;
 }
 
 export const CommunitySchema: Mongoose.Schema = new Mongoose.Schema({
@@ -20,6 +21,7 @@ export const CommunitySchema: Mongoose.Schema = new Mongoose.Schema({
   moderators: [
     { type: Mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
   ],
+  avatarImage: { type: String, required: false },
 });
 
 CommunitySchema.pre('find', function (next) {

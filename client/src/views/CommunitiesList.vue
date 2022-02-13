@@ -1,14 +1,12 @@
 <template>
-  <div class="flex justify-center gap-2">
-    <div>
-      <communities-list class="mb-2" category="all"></communities-list>
-    </div>
-    <div class="w-1/3">
+  <div>
+    <div class="flex justify-center gap-2">
+      <communities-list category="random"></communities-list>
       <communities-list category="all"></communities-list>
-    </div>
-    <div>
-    <communities-list class="mb-2" category="all"></communities-list>
-    <communities-list category="all"></communities-list>
+      <div class="flex flex-col gap-4">
+        <communities-list category="random"></communities-list>
+        <communities-list category="gaming"></communities-list>
+      </div>
     </div>
   </div>
 </template>

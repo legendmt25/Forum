@@ -9,8 +9,10 @@ export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Query((returns) => [Category])
-  async categories() {
-    return this.categoryService.findAll();
+  async categories(
+    @Arg('categoryName', { nullable: true }) categoryName: string
+  ) {
+    return this.categoryService.filter(categoryName);
   }
 
   @Query((returns) => Category)
