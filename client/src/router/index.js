@@ -31,6 +31,28 @@ const routes = [
     name: 'createPostView',
     component: () => import('@/views/CreatePost.vue'),
   },
+  {
+    path: '/user/options',
+    name: 'userOptionsView',
+    component: () => import('@/views/UserOptionsView.vue'),
+    children: [
+      {
+        name: 'account-options',
+        path: 'account',
+        component: () => import('@/views/UserOptionsAccount.vue'),
+      },
+      {
+        name: 'notifications-options',
+        path: 'notifications',
+        component: () => import('@/views/UserOptionsNotifications.vue')
+      },
+      {
+        name: 'profile-options',
+        path: 'profile',
+        component: () => import('@/views/UserOptionsProfile.vue')
+      },
+    ],
+  },
 ];
 
 const router = createRouter({

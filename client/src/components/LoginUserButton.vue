@@ -24,9 +24,18 @@ export default {
           query LOGIN($userCredentials: UserCredentialsInput!) {
             loginUser(userCredentialsInput: $userCredentials) {
               id
+              createdAt
               username
               firstName
               lastName
+              email
+              gender
+              options {
+                inboxMessages
+                upvotesOnComments
+                upvotesOnPosts
+                newFollowers
+              }
             }
           }`,
             variables: {
@@ -39,7 +48,9 @@ export default {
           .then((res) => res.json())
           .then((res) => {
             if (res.data == null) {
-              throw Error('Authentication failed: ' + JSON.stringify(res.errors));
+              throw Error(
+                'Authentication failed: ' + JSON.stringify(res.errors)
+              );
             }
             return res.data.loginUser;
           })
@@ -50,7 +61,7 @@ export default {
         sessionStorage.setItem('user', JSON.stringify(user));
         this.$router.push('/');
       } catch (err) {
-        alert('Invalid username or password');  
+        alert('Invalid username or password');
         console.log(err);
       }
     },

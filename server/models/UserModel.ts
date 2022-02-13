@@ -9,6 +9,13 @@ export enum Gender {
   Other = 'Other',
 }
 
+export interface IUserOptions {
+  inboxMessages: boolean;
+  upvotesOnComments: boolean;
+  upvotesOnPosts: boolean;
+  newFollowers: boolean;
+}
+
 export interface IUser {
   username: string;
   password: string;
@@ -22,7 +29,15 @@ export interface IUser {
   posts: IPost[];
   comments: IComment[];
   createdAt: Date;
+  options: IUserOptions;
 }
+
+export const UserOptionsSchema: Mongoose.Schema = new Mongoose.Schema({
+  inboxMessages: { type: Boolean },
+  upvotesOnComments: { type: Boolean },
+  upvotesOnPosts: { type: Boolean },
+  newFollowers: { type: Boolean },
+});
 
 export const UserSchema: Mongoose.Schema = new Mongoose.Schema(
   {
@@ -52,6 +67,10 @@ export const UserSchema: Mongoose.Schema = new Mongoose.Schema(
     comments: [
       { type: Mongoose.Schema.Types.ObjectId, required: false, ref: 'Comment' },
     ],
+    options: {
+      type: UserOptionsSchema,
+      required: false,
+    },
   },
   { timestamps: true }
 );

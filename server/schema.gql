@@ -61,6 +61,7 @@ type Mutation {
   joinCommunity(communityId: String!, userId: String!): Community!
   register(userData: UserInput!): User!
   reply(commentId: String!, replyInput: CommentInput!, userId: String!): Comment!
+  updateOptions(userId: String!, userOptionsInput: UserOptionInput!): User!
 }
 
 type Post {
@@ -102,6 +103,7 @@ type User {
   id: ID!
   lastName: String
   location: String
+  options: UserOptions
   posts: [Post!]!
   username: String!
 }
@@ -120,4 +122,18 @@ input UserInput {
   location: String
   password: String!
   username: String!
+}
+
+input UserOptionInput {
+  inboxMessages: Boolean!
+  newFollowers: Boolean!
+  upvotesOnComments: Boolean!
+  upvotesOnPosts: Boolean!
+}
+
+type UserOptions {
+  inboxMessages: Boolean
+  newFollowers: Boolean
+  upvotesOnComments: Boolean
+  upvotesOnPosts: Boolean
 }

@@ -1,9 +1,37 @@
-import { IsDate, IsEmail, Length } from 'class-validator';
+import { IsBoolean, IsDate, IsEmail, Length } from 'class-validator';
 import { Field, ObjectType, ID, InputType } from 'type-graphql';
 import { Gender } from '../../models/UserModel';
 import { Comment } from './CommentSchema';
 import { Community } from './CommunitySchema';
 import { Post } from './PostSchema';
+
+@ObjectType()
+export class UserOptions {
+  @Field({ defaultValue: false })
+  inboxMessages!: Boolean;
+  @Field({ defaultValue: false })
+  upvotesOnComments!: Boolean;
+  @Field({ defaultValue: false })
+  upvotesOnPosts!: Boolean;
+  @Field({ defaultValue: false })
+  newFollowers!: Boolean;
+}
+
+@InputType()
+export class UserOptionInput {
+  @Field()
+  @IsBoolean()
+  inboxMessages!: Boolean;
+  @Field()
+  @IsBoolean()
+  upvotesOnComments!: Boolean;
+  @Field()
+  @IsBoolean()
+  upvotesOnPosts!: Boolean;
+  @Field()
+  @IsBoolean()
+  newFollowers!: Boolean;
+}
 
 @ObjectType()
 export class User {
@@ -31,7 +59,7 @@ export class User {
 
   @Field()
   @IsDate()
-  createdAt!: Date
+  createdAt!: Date;
 
   @Field({ nullable: true })
   @IsDate()
@@ -51,6 +79,9 @@ export class User {
 
   @Field((is) => [Comment])
   comments!: Comment[];
+
+  @Field((is) => UserOptions, { defaultValue: new UserOptions() })
+  options!: UserOptions;
 }
 
 @InputType()

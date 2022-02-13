@@ -1,15 +1,7 @@
 <template>
   <div class="relative">
     <button
-      class="
-        flex
-        items-center
-        gap-3
-        select-none
-        text-sm
-        font-bold
-        hover:text-slate-500
-      "
+      class="flex items-center gap-3 select-none text-sm font-bold hover:text-slate-500"
       @click="toggle($event)"
     >
       <slot name="button"></slot>
@@ -49,12 +41,12 @@ export default {
       this.open = !this.open;
       if (this.open) {
         event.target.parentNode
-          .querySelector("svg")
-          .classList.add("rotate-180");
+          .querySelector('svg')
+          .classList.add('rotate-180');
       } else {
         event.target.parentNode
-          .querySelector("svg")
-          .classList.remove("rotate-180");
+          .querySelector('svg')
+          .classList.remove('rotate-180');
       }
     },
   },

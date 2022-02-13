@@ -1,55 +1,70 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-full h-full bg-black/75 z-40"
+    class="fixed top-0 left-0 w-full h-full flex justify-center p-40 bg-black/75 z-40"
     @click.self="$emit('close')"
   >
     <div
-      class="bg-neutral-50 p-20 absolute top-1/3 rounded left-1/2 -translate-y-1/2 transition-all z-50 shadow-md"
+      class="bg-neutral-50 dark:bg-neutral-700 dark:text-white px-20 py-10 rounded transition-all z-50 shadow-md"
     >
-      <button
-        class="self-end font-bold text-black hover:text-white shadow-sm transition-all hover:bg-blue-400 rounded-full border px-2"
-        @click.prevent="$emit('close')"
-      >
-        X
-      </button>
-      <div class="flex gap-5">
-        <div class="flex flex-col gap-2 w-1/2">
-          <h2 class="font-bold border-b py-2">Create a community</h2>
+      <div class="flex justify-between border-b py-2">
+        <h2 class="font-bold w-full py-2">Create a community</h2>
+
+        <button
+          class="self-end font-bold dark:text-white text-black hover:text-white py-2 px-4 shadow-sm transition-all hover:bg-red-400 border-red-400 rounded-full border"
+          @click.prevent="$emit('close')"
+        >
+          X
+        </button>
+      </div>
+      <div class="flex flex-col gap-5 py-10">
+        <div class="flex flex-col gap-5">
           <input-component which="community" property="name"></input-component>
           <input-component
             which="community"
             property="description"
           ></input-component>
-          <button @click="$emit('close')"></button>
-          <button
-            class="rounded-full bg-blue-600 hover:bg-blue-500 p-2 transition-all text-white font-bold text-sm"
-            @click="createCommunity()"
-          >
-            Create
-          </button>
         </div>
-        <div class="py-2 w-1/2">
-          <select-component
-            size="4"
-            which="community"
-            property="categoryName"
-            :list="categories"
-          ></select-component>
-          <div class="flex gap-0">
-            <input class="rounded-l z-10 p-1" v-model="category" />
+        <div class="py-2 flex flex-col gap-2">
+          <div class="flex gap-2 select-none flex-wrap">
+            <div
+              :class="{
+                'bg-sky-500 text-white': selectedCategory === category.value,
+              }"
+              class="border px-3 border-sky-500 cursor-pointer rounded-full"
+              v-for="category in categories"
+              :key="category.id"
+              @click="
+                selectedCategory =
+                  selectedCategory !== category.value ? category.value : ''
+              "
+            >
+              {{ category.value }}
+            </div>
+          </div>
+          <div class="flex shadow-md">
+            <input
+              class="dark:bg-neutral-600 dark:text-white form-input shadow-none w-full rounded-l border"
+              v-model="category"
+            />
             <button
               type="button"
               @click="addCategory()"
-              class="rounded-r border shadow-sm pl-10 pr-5 relative right-5 text-sm text-white bg-blue-600 hover:bg-blue-500 transition-all"
+              class="rounded-r px-8 text-sm text-white bg-blue-600 hover:bg-blue-500 transition-all"
             >
               Add
             </button>
           </div>
           <span class="text-xs leading-normal font-semibold text-neutral-500"
-            >*You won't be able to change the category after making the
+            >*You won't be able to change the category after creating the
             community</span
           >
         </div>
+        <button
+          class="rounded-full bg-blue-600 hover:bg-blue-500 p-2 transition-all text-white font-bold text-sm"
+          @click="createCommunity()"
+        >
+          Create
+        </button>
       </div>
     </div>
   </div>
@@ -59,12 +74,13 @@
 import { inject, provide, ref } from 'vue';
 import InputComponent from './InputComponent.vue';
 import { mapToSelectItems } from './utility';
-import SelectComponent from './SelectComponent.vue';
+
 export default {
   data() {
     return {
       categories: [],
       category: '',
+      selectedCategory: '',
     };
   },
   setup() {
@@ -134,7 +150,7 @@ export default {
             }
             this.categories.push({
               text: res.data.createCategory.name,
-              value: res.data.createCategory.name
+              value: res.data.createCategory.name,
             });
           })
           .catch((err) => {
@@ -146,7 +162,7 @@ export default {
     },
     async createCommunity() {
       if (this.obj.categoryName == '') {
-        return;
+        return false;
       }
       let community = await fetch('http://localhost:3000/graphql', {
         method: 'POST',
@@ -179,6 +195,6 @@ export default {
       this.$router.push(`/community/${community.id}`);
     },
   },
-  components: { InputComponent, SelectComponent },
+  components: { InputComponent },
 };
 </script>

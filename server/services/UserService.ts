@@ -1,16 +1,20 @@
 import { Inject, Service } from 'typedi';
 import { IUser } from '../models/UserModel';
-import { UserCredentialsInput, UserInput } from '../graphql/schema/UserSchema';
+import {
+  UserCredentialsInput,
+  UserInput,
+  UserOptionInput,
+} from '../graphql/schema/UserSchema';
 import { Model } from 'mongoose';
 
 @Service()
 export default class UserService {
   constructor(@Inject('USER') private readonly userModel: Model<IUser>) {}
-  
+
   async loginUser(userCredentials: UserCredentialsInput) {
     const user = await this.userModel.findOne(userCredentials);
-    if(user == null) {
-      throw new Error("Invalid username or password");
+    if (user == null) {
+      throw new Error('Invalid username or password');
     }
     return user;
   }
@@ -29,16 +33,37 @@ export default class UserService {
   }
 
   async findById(id: string) {
-    return this.userModel.findById(id).populate('communities').populate('posts').populate('comments');
+    return this.userModel
+      .findById(id)
+      .populate('communities')
+      .populate('posts')
+      .populate('comments');
   }
 
   async create(userInput: UserInput) {
     try {
       const x = new this.userModel(userInput);
+      x.options = {
+        inboxMessages: false,
+        newFollowers: false,
+        upvotesOnComments: false,
+        upvotesOnPosts: false,
+      };
       return x.save();
     } catch (err) {
       throw err;
     }
+  }
+
+  async updateOptions(userId: string, userOptionsInput: UserOptionInput) {
+    const user = await this.findById(userId);
+    user!.options = {
+      inboxMessages: userOptionsInput.inboxMessages as boolean,
+      newFollowers: userOptionsInput.newFollowers as boolean,
+      upvotesOnComments: userOptionsInput.upvotesOnComments as boolean,
+      upvotesOnPosts: userOptionsInput.upvotesOnPosts as boolean,
+    };
+    return user!.save();
   }
 
   async deleteById(id: string) {
