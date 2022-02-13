@@ -26,3 +26,7 @@ export const transformDate = (date) => {
   }
   return `${time.toFixed(0)} ${what} ago`;
 };
+
+export const communityAvatarImage = (src) => {
+  return `http://localhost:3000/${src}`;
+}

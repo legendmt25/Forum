@@ -2,7 +2,7 @@
   <div>
     <div class="flex justify-center gap-2">
       <communities-list category="random"></communities-list>
-      <communities-list category="all"></communities-list>
+      <communities-list class="w-1/3" category="all"></communities-list>
       <div class="flex flex-col gap-4">
         <communities-list category="random"></communities-list>
         <communities-list category="gaming"></communities-list>

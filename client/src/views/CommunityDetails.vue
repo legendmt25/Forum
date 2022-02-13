@@ -26,6 +26,7 @@
 
 <script>
 import PostSingle from '../components/PostSingle.vue';
+import { communityAvatarImage } from '../components/utility';
 export default {
   name: 'communityDetailsView',
   components: { PostSingle },
@@ -128,7 +129,7 @@ export default {
   },
   computed: {
     avatarImageSrc() {
-      return `http://localhost:3000/${this.community.avatarImage}`;
+      return communityAvatarImage(this.community.avatarImage);
     },
   },
 };

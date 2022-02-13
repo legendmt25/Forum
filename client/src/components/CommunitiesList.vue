@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="p-2 bg-neutral-300 w-full text-center">{{ title }}</div>
+    <div class="p-2 bg-neutral-300 w-full text-center text-xs md:text-base">{{ title }}</div>
     <ol
-      class="bg-neutral-50 dark:bg-neutral-600 list-inside rounded shadow-lg dark:text-white"
+      class="bg-neutral-50 dark:bg-neutral-600 list-inside rounded shadow-md dark:text-white"
     >
       <community-single-item
         v-for="community in communities"
@@ -41,6 +41,7 @@ export default {
                   id
                   name
                   description
+                  avatarImage
               }
           }`,
         }),
@@ -66,6 +67,7 @@ export default {
                   id
                   name
                   description
+                  avatarImage
                 }
             }
         }`,
