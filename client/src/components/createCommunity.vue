@@ -28,17 +28,17 @@
           <div class="flex gap-2 select-none flex-wrap">
             <div
               :class="{
-                'bg-sky-500 text-white': selectedCategory === category.value,
+                'bg-sky-500 text-white': selectedCategory === category.name,
               }"
               class="border px-3 border-sky-500 cursor-pointer rounded-full"
               v-for="category in categories"
               :key="category.id"
               @click="
                 selectedCategory =
-                  selectedCategory !== category.value ? category.value : ''
+                  selectedCategory !== category.name ? category.name : ''
               "
             >
-              {{ category.value }}
+              {{ category.name }}
             </div>
           </div>
           <div class="flex shadow-md">
@@ -73,7 +73,6 @@
 <script>
 import { inject, provide, ref } from 'vue';
 import InputComponent from './InputComponent.vue';
-import { mapToSelectItems } from './utility';
 
 export default {
   data() {
@@ -116,7 +115,6 @@ export default {
     })
       .then((res) => res.json())
       .then((res) => res.data.categories);
-    this.categories = mapToSelectItems(this.categories, 'name', 'name');
   },
   methods: {
     async addCategory() {
@@ -148,10 +146,7 @@ export default {
             if (res.data == null) {
               throw new Error(res);
             }
-            this.categories.push({
-              text: res.data.createCategory.name,
-              value: res.data.createCategory.name,
-            });
+            this.categories.push(res.data.createCategory);
           })
           .catch((err) => {
             throw err;
@@ -161,7 +156,7 @@ export default {
       }
     },
     async createCommunity() {
-      if (this.obj.categoryName == '') {
+      if (this.selectedCategory == '') {
         return false;
       }
       let community = await fetch('http://localhost:3000/graphql', {
@@ -180,7 +175,7 @@ export default {
             }
         }`,
           variables: {
-            categoryName: this.obj.categoryName,
+            categoryName: this.selectedCategory,
             userId: JSON.parse(sessionStorage.getItem('user')).id,
             community: {
               name: this.obj.name,
@@ -191,7 +186,6 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => res.data.createCommunity);
-      console.log(community);
       this.$router.push(`/community/${community.id}`);
     },
   },

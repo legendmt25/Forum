@@ -40,7 +40,7 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => res.data.register);
-      this.$router.push('/');
+      this.$router.push('/login');
     },
   },
 };
