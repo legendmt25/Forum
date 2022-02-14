@@ -1,6 +1,4 @@
-import { createWriteStream } from 'fs';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import path from 'path';
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { Service } from 'typedi';
 import { CommunityService } from '../../services/CommunityService';

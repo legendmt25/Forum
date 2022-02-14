@@ -94,6 +94,10 @@ type Query {
   users: [User!]!
 }
 
+type Subscription {
+  postAdded: Post!
+}
+
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 

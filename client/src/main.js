@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import './assets/tailwind.css';
+import './registerServiceWorker'
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((route) => route.name == 'loginView' || route.name == 'registerView')) {

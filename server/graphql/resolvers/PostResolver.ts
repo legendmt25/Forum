@@ -1,4 +1,13 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
+  PubSub,
+  PubSubEngine,
+  Root,
+} from 'type-graphql';
 import { Service } from 'typedi';
 import { PostService } from '../../services/PostService';
 import { Post, PostInput } from '../schema/PostSchema';
@@ -17,8 +26,16 @@ export class PostResolver {
   async createPost(
     @Arg('userId') userId: string,
     @Arg('communityId') communityId: string,
-    @Arg('postInput') postInput: PostInput
+    @Arg('postInput') postInput: PostInput,
+    @PubSub() pubSub: PubSubEngine
   ) {
-    return this.postService.create(userId, communityId, postInput);
+    let post = await this.postService.create(userId, communityId, postInput);
+    pubSub.publish('POST_ADDED', post);
+    return post;
+  }
+
+  @Subscription((returns) => Post, { topics: 'POST_ADDED' })
+  async postAdded(@Root() payload: Post) {
+    return payload;
   }
 }

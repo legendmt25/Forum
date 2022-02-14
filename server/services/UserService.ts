@@ -5,7 +5,7 @@ import {
   UserInput,
   UserOptionInput,
 } from '../graphql/schema/UserSchema';
-import { Model } from 'mongoose';
+import { Model, model } from 'mongoose';
 
 @Service()
 export default class UserService {
