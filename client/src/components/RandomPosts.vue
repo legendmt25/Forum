@@ -25,28 +25,28 @@ export default {
       },
       body: JSON.stringify({
         query: `
-                query LIST_POSTS {
-                    posts {
+        query LIST_POSTS {
+            posts {
+                id
+                title
+                str
+                createdAt
+                user {
+                    id
+                    username
+                }
+                comments {
+                    id
+                    text
+                    createdAt
+                    user {
                         id
-                        title
-                        str
-                        createdAt
-                        user {
-                            id
-                            username
-                        }
-                        comments {
-                            id
-                            text
-                            createdAt
-                            user {
-                                id
-                                username
-                            }
-                        }
+                        username
                     }
                 }
-            `,
+            }
+        }
+    `,
       }),
     })
       .then((res) => res.json())

@@ -15,14 +15,12 @@ import { schema, typeDefsAndResolvers } from './graphql/schema';
 async function startServer() {
   const PORT = process.env.PORT || 3000;
   const app = express();
-
   app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(bodyParser.json());
   app.use(cors());
 
   const ws = createServer(app);
-
   const sch = await schema;
   const subscriptionServer = SubscriptionServer.create(
     {
@@ -50,7 +48,6 @@ async function startServer() {
   await Mongoose.connect('mongodb://localhost:27017/');
   await apollo.start();
   apollo.applyMiddleware({ app });
-
   ws.listen(PORT, () => {
     console.log(
       `GraphQL running on http://localhost:${PORT}${apollo.graphqlPath}`

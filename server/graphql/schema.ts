@@ -4,10 +4,8 @@ import { PostResolver } from './resolvers/PostResolver';
 import { CommentResolver } from './resolvers/CommentResolver';
 import { CountryResolver } from './resolvers/CountryResolver';
 import { CategoryResolver } from './resolvers/CategoryResolver';
-
 import { buildSchema, buildTypeDefsAndResolvers } from 'type-graphql';
 import { Container } from 'typedi';
-
 import UserModel from '../models/UserModel';
 import CommunityModel from '../models/CommunityModel';
 import PostModel from '../models/PostModel';
