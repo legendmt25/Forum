@@ -10,7 +10,7 @@ import {
 } from 'type-graphql';
 import { Service } from 'typedi';
 import { PostService } from '../../services/PostService';
-import { Post, PostInput } from '../schema/PostSchema';
+import { Post, PostInput, PostSubscription } from '../schema/PostSchema';
 
 @Service()
 @Resolver()
@@ -30,12 +30,15 @@ export class PostResolver {
     @PubSub() pubSub: PubSubEngine
   ) {
     let post = await this.postService.create(userId, communityId, postInput);
-    pubSub.publish('POST_ADDED', post);
+    await pubSub
+      .publish('POST_ADDED', post.title)
+      .then(() => console.log('published'));
     return post;
   }
 
-  @Subscription((returns) => Post, { topics: 'POST_ADDED' })
-  async postAdded(@Root() payload: Post) {
+  @Subscription((returns) => String, { topics: 'POST_ADDED' })
+  async postAdded(@Root() payload: string) {
+    console.log(payload);
     return payload;
   }
 }

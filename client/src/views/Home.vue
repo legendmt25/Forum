@@ -3,10 +3,10 @@
     :class="!showAddCommunity ? 'hidden' : ''"
     @close="showAddCommunity = false"
   ></create-community>
-  <div class="home flex gap-5">
-    <random-posts></random-posts>
+  <div class="home flex flex-col md:flex-row gap-5 justify-center">
+    <random-posts class="md:w-1/2 w-full"></random-posts>
     <div
-      class="flex flex-col gap-2 w-52 rounded p-5 bg-neutral-100 dark:bg-neutral-600 dark:text-white shadow-md text-center"
+      class="flex flex-col gap-2 w-60 h-fit rounded p-5 bg-neutral-100 dark:bg-neutral-600 dark:text-white shadow-md text-center"
     >
       <span class="text-sm"
         >Create your own community or post to another communities that you are

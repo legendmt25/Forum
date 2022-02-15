@@ -11,7 +11,7 @@
   <div class="flex justify-center">
     <div class="flex flex-col items-center w-1/2 gap-3">
       <div class="flex gap-3 bg-neutral-50 shadow-sm roudned w-full p-3">
-        <router-link :to="{ name: 'createPostView', params: {} }">
+        <router-link class="w-full" :to="{ name: 'createPostView', params: {} }">
           <input class="p-1 pl-10 w-full" placeholder="Create Post" type="text" />
         </router-link>
       </div>

@@ -24,8 +24,22 @@ async function startServer() {
   const ws = createServer(app);
 
   const sch = await schema;
-  const schTypeDefsAndResolvers = await typeDefsAndResolvers;
+  const subscriptionServer = SubscriptionServer.create(
+    {
+      execute,
+      subscribe,
+      schema: sch,
+      onConnect() {
+        console.log('connected');
+      },
+      onDisconnect() {
+        console.log('disconnect');
+      },
+    },
+    { server: ws, path: '/graphql' }
+  );
 
+  const schTypeDefsAndResolvers = await typeDefsAndResolvers;
   const apollo = new ApolloServer({
     typeDefs: schTypeDefsAndResolvers.typeDefs,
     resolvers: schTypeDefsAndResolvers.resolvers,
@@ -35,13 +49,11 @@ async function startServer() {
 
   await Mongoose.connect('mongodb://localhost:27017/');
   await apollo.start();
-  apollo.applyMiddleware({ app, path: '/graphql' });
+  apollo.applyMiddleware({ app });
 
   ws.listen(PORT, () => {
-    console.log(`GraphQL running on http://localhost:${PORT}`);
-    new SubscriptionServer(
-      { execute, subscribe, schema: sch },
-      { server: ws, path: '/graphql' }
+    console.log(
+      `GraphQL running on http://localhost:${PORT}${apollo.graphqlPath}`
     );
   });
 }

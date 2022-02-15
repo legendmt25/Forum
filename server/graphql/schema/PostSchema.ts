@@ -26,10 +26,16 @@ export class Post {
 }
 
 @InputType()
-export class PostInput {
+export class PostInput implements Partial<Post> {
   @Field()
   title!: String;
 
   @Field()
   str?: String;
+}
+
+@ObjectType()
+export class PostSubscription implements Partial<Post> {
+  @Field()
+  title!: String;
 }
