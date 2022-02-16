@@ -19,6 +19,7 @@ self.addEventListener('notificationclick', (ev) => {
 });
 
 self.addEventListener('push', (ev) => {
+  console.log(ev);
   const data = ev.data.json();
   self.registration.showNotification(data.title, {
     body: 'Notified',

@@ -14,6 +14,7 @@ export interface IUserOptions {
   upvotesOnComments: boolean;
   upvotesOnPosts: boolean;
   newFollowers: boolean;
+  newPosts: boolean;
 }
 
 export interface IUser {
@@ -37,6 +38,7 @@ export const UserOptionsSchema: Mongoose.Schema = new Mongoose.Schema({
   upvotesOnComments: { type: Boolean },
   upvotesOnPosts: { type: Boolean },
   newFollowers: { type: Boolean },
+  newPosts: { type: Boolean },
 });
 
 export const UserSchema: Mongoose.Schema = new Mongoose.Schema(

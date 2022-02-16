@@ -53,6 +53,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Mutation {
+  addedSubscription(pushSubscriptionInput: PushSubscriptionInput!, userId: String!): Boolean!
   changeAvatar(communityId: String!, file: Upload!): Community!
   createCategory(categoryInput: CategoryInput!): Category!
   createComment(commentInput: CommentInput!, postId: String!, userId: String!): Comment!
@@ -80,6 +81,41 @@ input PostInput {
   title: String!
 }
 
+type PostSubscription {
+  str: String!
+  title: String!
+}
+
+type PushSubscription {
+  id: ID!
+  subscription: PushSubscriptionCore
+  user: User!
+}
+
+type PushSubscriptionCore {
+  endpoint: String!
+  keys: PushSubscriptionKeys!
+}
+
+input PushSubscriptionCoreInput {
+  endpoint: String!
+  keys: PushSubscriptionKeysInput!
+}
+
+input PushSubscriptionInput {
+  subscription: PushSubscriptionCoreInput!
+}
+
+type PushSubscriptionKeys {
+  auth: String!
+  p256dh: String!
+}
+
+input PushSubscriptionKeysInput {
+  auth: String!
+  p256dh: String!
+}
+
 type Query {
   categories(categoryName: String): [Category!]!
   categoryById(categoryId: String!): Category!
@@ -90,12 +126,13 @@ type Query {
   countries: [Country!]!
   loginUser(userCredentialsInput: UserCredentialsInput!): User!
   posts: [Post!]!
+  subscriptions: [PushSubscription!]!
   user(userId: String!): User
   users: [User!]!
 }
 
 type Subscription {
-  postAdded: Post!
+  postAdded: PostSubscription!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -136,6 +173,7 @@ input UserInput {
 input UserOptionInput {
   inboxMessages: Boolean!
   newFollowers: Boolean!
+  newPosts: Boolean!
   upvotesOnComments: Boolean!
   upvotesOnPosts: Boolean!
 }
@@ -143,6 +181,7 @@ input UserOptionInput {
 type UserOptions {
   inboxMessages: Boolean
   newFollowers: Boolean
+  newPosts: Boolean
   upvotesOnComments: Boolean
   upvotesOnPosts: Boolean
 }

@@ -4,6 +4,7 @@ import { Gender } from '../../models/UserModel';
 import { Comment } from './CommentSchema';
 import { Community } from './CommunitySchema';
 import { Post } from './PostSchema';
+import { PushSubscription } from 'web-push';
 
 @ObjectType()
 export class UserOptions {
@@ -15,6 +16,8 @@ export class UserOptions {
   upvotesOnPosts!: Boolean;
   @Field({ defaultValue: false })
   newFollowers!: Boolean;
+  @Field({ defaultValue: false })
+  newPosts!: Boolean;
 }
 
 @InputType()
@@ -31,6 +34,9 @@ export class UserOptionInput {
   @Field()
   @IsBoolean()
   newFollowers!: Boolean;
+  @Field()
+  @IsBoolean()
+  newPosts!: Boolean;
 }
 
 @ObjectType()

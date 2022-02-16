@@ -44,6 +44,7 @@ export default class UserService {
     try {
       const x = new this.userModel(userInput);
       x.options = {
+        newPosts: false,
         inboxMessages: false,
         newFollowers: false,
         upvotesOnComments: false,
@@ -58,6 +59,7 @@ export default class UserService {
   async updateOptions(userId: string, userOptionsInput: UserOptionInput) {
     const user = await this.findById(userId);
     user!.options = {
+      newPosts: userOptionsInput.newPosts as boolean,
       inboxMessages: userOptionsInput.inboxMessages as boolean,
       newFollowers: userOptionsInput.newFollowers as boolean,
       upvotesOnComments: userOptionsInput.upvotesOnComments as boolean,

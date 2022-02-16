@@ -38,4 +38,6 @@ export class PostInput implements Partial<Post> {
 export class PostSubscription implements Partial<Post> {
   @Field()
   title!: String;
+  @Field()
+  str!: String;
 }

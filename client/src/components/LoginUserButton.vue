@@ -4,6 +4,7 @@
 
 <script>
 import { inject } from 'vue';
+import { addSubscriptionToServer } from './utility';
 export default {
   setup() {
     let obj = inject('userData');
@@ -35,6 +36,7 @@ export default {
                 upvotesOnComments
                 upvotesOnPosts
                 newFollowers
+                newPosts
               }
             }
           }`,
@@ -60,6 +62,7 @@ export default {
         this.isAuthenticated = true;
         sessionStorage.setItem('user', JSON.stringify(user));
         this.$router.push('/');
+        addSubscriptionToServer();
       } catch (err) {
         alert('Invalid username or password');
         console.log(err);

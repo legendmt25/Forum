@@ -1,5 +1,9 @@
 <template>
-  <div class="dark:text-white p-2" v-for="(option, key) in user.options" :key="key">
+  <div
+    class="dark:text-white p-2"
+    v-for="(option, key) in user.options"
+    :key="key"
+  >
     {{ key }}
     <input
       type="checkbox"
@@ -34,10 +38,11 @@ export default {
                     id
                     username
                     options {
-                    inboxMessages
-                    upvotesOnComments
-                    upvotesOnPosts
-                    newFollowers
+                      inboxMessages
+                      upvotesOnComments
+                      upvotesOnPosts
+                      newFollowers
+                      newPosts
                     }
                 }
             }`,
@@ -49,7 +54,7 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => res.data.updateOptions.options);
-        sessionStorage.setItem('user', JSON.stringify(this.user));
+      sessionStorage.setItem('user', JSON.stringify(this.user));
     },
   },
 };
