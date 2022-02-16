@@ -2,10 +2,6 @@
 import { register } from 'register-service-worker';
 import { addSubscriptionToServer } from './components/utility';
 
-
-
-
-
 async function requestNotificationPermission() {
   return await Notification.requestPermission(
     (status) => `Notifications permission status ${status}`
@@ -24,6 +20,7 @@ if (process.env.NODE_ENV === 'production') {
       if (Notification.permission == 'granted') {
         addSubscriptionToServer();
       }
+
       console.log(
         'App is being served from cache by a service worker.\n' +
           'For more details, visit https://goo.gl/AFskqB'
@@ -51,4 +48,3 @@ if (process.env.NODE_ENV === 'production') {
     },
   });
 }
-

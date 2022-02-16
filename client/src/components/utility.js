@@ -59,7 +59,6 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
-
 export async function addSubscriptionToServer() {
   let sub = await subscribeUser();
   const isUserAuthenticated = typeof sessionStorage.getItem('user') == 'string';
@@ -102,4 +101,3 @@ export async function addSubscriptionToServer() {
   }
   return subscriptionAdded;
 }
-
