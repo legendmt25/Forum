@@ -13,6 +13,7 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-co
 import webPush from 'web-push';
 
 import { schema } from './graphql/schema';
+import countries from './countries.json';
 
 async function startServer() {
   const PORT = process.env.PORT || 3000;
@@ -69,7 +70,14 @@ async function startServer() {
     vapidKeys.privateKey
   );
 
-  await Mongoose.connect('mongodb://localhost:27017/');
+  Mongoose.connect('mongodb://localhost:27017/')
+    .then((db) => {
+      db.connection.collection('countries').drop();
+      db.connection.collection('countries').insertMany(countries);
+    })
+    .catch((err) => {
+      throw new Error('Coudnt connect to MongoDB');
+    });
 
   await apollo.start();
   apollo.applyMiddleware({ app });
